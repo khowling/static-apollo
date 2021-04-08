@@ -9,8 +9,10 @@ const stackTokens = { childrenGap: 15 };
 function App() {
 
   const [result, setResult] = useState()
+  const [query, setQuery] = useState(`query  {\n   hello\n}`)
+
   function onClick() {
-    fetch(`/api/graphql?query=${encodeURIComponent('query  {   hello}')}`)
+    fetch(`/api/graphql?query=${query}`)
       .then(response => response.text()).then(r => setResult(r))
   }
 
@@ -48,8 +50,9 @@ function App() {
           label="Enter your GraphQL query"
           multiline={true}
           rows={5}
+          onChange={(e, v) => setQuery(v)}
           // eslint-disable-next-line react/jsx-no-bind
-          defaultValue={`query  {\n   hello\n}`}
+          defaultValue={query}
         />
         <DefaultButton text="Call" onClick={onClick} allowDisabledFocus />
         <TextField
