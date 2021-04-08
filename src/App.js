@@ -54,7 +54,7 @@ function App() {
           // eslint-disable-next-line react/jsx-no-bind
           defaultValue={query}
         />
-        <DefaultButton text="Call" onClick={onClick} allowDisabledFocus />
+        <DefaultButton text="Call" onClick={onClick} allowDisabledFocus styles={{ root: { marginTop: '50px' } }} />
         <TextField
           label="Results"
           multiline={true}
