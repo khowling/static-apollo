@@ -1,24 +1,69 @@
 import logo from './logo.svg';
+import { useState } from 'react';
+import { Stack, Text, TextField, DefaultButton, Link, FontWeights } from '@fluentui/react';
 import './App.css';
 
+const boldStyle = { root: { fontWeight: FontWeights.semibold } };
+const stackTokens = { childrenGap: 15 };
+
 function App() {
+
+  const [result, setResult] = useState()
+  function onClick() {
+    fetch(`/api/graphql?query=${encodeURIComponent('query  {   hello}')}`)
+      .then(response => response.text()).then(r => setResult(r))
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Stack
+      horizontalAlign="center"
+      verticalAlign="center"
+      verticalFill
+      styles={{
+        root: {
+          width: '960px',
+          margin: '0 auto',
+          textAlign: 'center',
+          color: '#605e5c',
+        },
+      }}
+      tokens={stackTokens}
+    >
+      <img
+        className="App-logo"
+        src={logo}
+        alt="logo"
+      />
+      <Text variant="xxLarge" styles={boldStyle}>
+        Azure Static Website with GraphQL API
+      </Text>
+      <Text variant="large">
+        Example deployment of a Azure Static website built with React, that calls a GrpahQL API
+      </Text>
+      <Text variant="large" styles={boldStyle}>
+        Try it
+      </Text>
+      <Stack horizontal tokens={stackTokens} horizontalAlign="center">
+        <TextField
+          label="Enter your GraphQL query"
+          multiline={true}
+          rows={5}
+          // eslint-disable-next-line react/jsx-no-bind
+          defaultValue={`query  {\n   hello\n}`}
+        />
+        <DefaultButton text="Call" onClick={onClick} allowDisabledFocus />
+        <TextField
+          label="Results"
+          multiline={true}
+          rows={5}
+          disabled={true}
+          value={result}
+        />
+
+
+      </Stack>
+
+    </Stack>
   );
 }
 

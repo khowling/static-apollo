@@ -11,13 +11,13 @@ const typeDefs = gql`
 //  query  {
 //   hello 
 // }
-
+// ?query=query%20%7B%20hello%20%7D
 
 // Provide resolver functions for your schema fields
 const resolvers = {
-    Query: {
-        hello: () => 'Hello world!',
-    },
+  Query: {
+    hello: () => 'Hello world!',
+  },
 };
 
 const server = new ApolloServer({ typeDefs, resolvers });
