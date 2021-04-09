@@ -48,9 +48,9 @@ Azure Static Websites use Github Actions  CD/CI to deploy your site. When you cr
                 -l westeurope \
                 -g $APPNAME \
                 -n $APPNAME \
-                -s https://github.com/${GH_REPO}  -b master \
+                -s https://github.com/${GH_REPO}  -b main \
                 --api-location /apollo \
-                --app-artifact-location /build \
+                --app-artifact-location build \
                 --token $GH_PAT
             ```
 
