@@ -10,31 +10,49 @@ Azure Static Websites use Github Actions  CD/CI to deploy your site. When you cr
     * Enter a name for your repo
     * Press 'Create repository from templte' button
     
-2. Create the Azure Static Website thats 
+2. Create the __Azure Static Website__, 
 
-    * Follow instructions [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) to Create a github __Personal Access Token__ to set `GH_PAT` below
+    * Either, Through the Portal
 
-    * Set the `GH_PAT` & `GH_REPO` variables with your values, and create the Azure resource
+        * Create resource 'Static Web App', and provide the following __Deployment details:__
 
-        ```
-        # Generate unique name
-        APPNAME=apollodemo$(date +%s | cut -c 6-10)
+            * __Source__: Github
+            * __Organisation__: <github_account>
+            * __Repository__: <cloned_repo_name>
+            * __Branch__: main
+            * __Build presets__ : React
+            * __App Location__ : /
+            * __Api Location__ : apollo
+            * __Output location__ : build
+        
 
-        # Add your Github Personal Access Token
-        GH_PAT=< github personal access token >
+    * or, Through the CLI
 
-        # Add your Github repo "account/repo"
-        GH_REPO=< gtihub_account / cloned_repo_name >
+        * Follow instructions [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) to Create a github __Personal Access Token__ to set `GH_PAT` below.  Ensure your scopes include all of `repo` and `workflow`
 
-        az group create -n $APPNAME -l westeurope
+        * Set the `GH_PAT` & `GH_REPO` variables with your values, and create the Azure resource
 
-        az staticwebapp create \
-        -l westeurope \
-        -g $APPNAME \
-        -n $APPNAME \
-        -s https://github.com/${GH_REPO}  -b master \
-        --token $GH_PAT
-        ```
+            ```
+            # Generate unique name
+            APPNAME=apollodemo$(date +%s | cut -c 6-10)
+
+            # Add your Github Personal Access Token
+            GH_PAT=< github personal access token >
+
+            # Add your Github repo "account/repo"
+            GH_REPO=< gtihub_account / cloned_repo_name >
+
+            az group create -n $APPNAME -l westeurope
+
+            az staticwebapp create \
+                -l westeurope \
+                -g $APPNAME \
+                -n $APPNAME \
+                -s https://github.com/${GH_REPO}  -b master \
+                --api-location /apollo \
+                --app-artifact-location /build \
+                --token $GH_PAT
+            ```
 
 
 3. Track the depolyment progress
@@ -60,12 +78,7 @@ https://github.com/facebook/create-react-app
 follow to create a static webapp
 https://docs.microsoft.com/en-gb/azure/static-web-apps/get-started-cli?tabs=react
 
-```
-build presets : React
-App Location : /
-Api Location : apollo
-output location : build  (output of npm run-scripts build)
-```
+
 
 ### References
 
